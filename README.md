@@ -25,8 +25,39 @@ Depois que esses dados são tratados, são armazenados em uma base de dados SQL.
 
 Tendo a base de dados local, uma outra parte do programa fornece esses dados em forma de "estatísticas de cartinhas" em conjunto com informações sobre os jogadores. Na prática, o que a API (a nossa API) retorna, são as informações necessárias para compor todas as cartinhas para uma dada liga (edição do campeonato).
     
-## Significado dos dados presentes nas cartinhas
+## O que Temos de Legal?
 
+<p align="center">
+<img src=https://i.imgur.com/yhEjrUn.png/>
+ </p>
+Depois de muita numerologia temos as seguintes estatísticas:
+
+* fps (fantasy points): é analogo ao fantasy points da valve mas calculado de uma forma levemente modificada para favorecer mais chorões como nós. Também dá uma ajuda para suportes não ficarem apagados (eu jogo de supp hehe).
+* imp: é o [imp](https://stratz.com/knowledge-base/General/How%20is%20IMP%20calculated%3F) calculado pelo próprio stratz.
+* vst (versatilidade): basicamente uma proporção de (heróis diferentes jogados)/(partidas jogadas).
+* kda: você sabe o que é isso.
+* frm (farm): gold e creeps.
+* tfi (team fight impact): alguns dados que influenciam em team fighs, como dano causado em heróis.
+* sup (support): os dados que se espera que todo suporte tenha, como wards e cura.
+
+Todas essas estatísticas levam em conta pesos ajustados manualmente para que cada dado individual tenha o peso desejado. Os fantasy points em especial, são calculados com os seguintes pesos:
+
+```
+    stat_list = np.array([
+        ['kills', 0.3],
+        ['deaths', -0.3], 
+        ['assists', 0.15],
+        ['lh', 0.003],
+        ['gpm', 0.004],
+        ['xpm', 0.004],
+        ['stun', 0.0004],
+        ['healing', 0.0003],
+        ['damage_tower', 0.0003],
+        ['stacks', 0.5],
+        ['wards', 0.3],
+        ['sentries', 0.3]
+        ])
+```
 
 # Implementação
 
